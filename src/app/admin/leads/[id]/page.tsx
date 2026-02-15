@@ -55,6 +55,7 @@ export default function LeadDetailPage() {
   useEffect(() => {
     if (params.id) {
       fetchLead(params.id as string);
+      markMessagesAsRead(params.id as string);
     }
   }, [params.id]);
 
@@ -82,6 +83,17 @@ export default function LeadDetailPage() {
       console.error('Failed to fetch lead:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const markMessagesAsRead = async (id: string) => {
+    try {
+      await fetch(`/api/leads/${id}/mark-read`, {
+        method: 'POST',
+      });
+      // Silent - keine Fehlerbehandlung nötig, Badge verschwindet automatisch
+    } catch (error) {
+      console.error('Failed to mark messages as read:', error);
     }
   };
 
