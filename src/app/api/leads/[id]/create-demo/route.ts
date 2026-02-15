@@ -33,19 +33,19 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     }
 
     // TODO: Hier würde der echte BUILDER-Agent aufgerufen werden
-    // Für jetzt: Mock-Demo-URL generieren
+    // Für jetzt: GitHub Pages Template-URL generieren
     console.log('🏗️ BUILDER-Auftrag für:', lead.firma);
     console.log('Branche:', lead.branche);
     console.log('Bestehende Website:', lead.websiteUrl);
 
-    // Simulierte Demo-URL (später durch echten BUILDER ersetzt)
+    // Demo-URL auf echtes GitHub Pages Template zeigen
     const firmaSlug = lead.firma
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '');
     
-    const demoUrl = `https://demo.agentur-lokal.de/${firmaSlug}`;
+    const demoUrl = `https://martin-scharf.github.io/branchen-templates/demos/${firmaSlug}.html`;
 
     // Lead aktualisieren
     const updatedLead = await prisma.lead.update({

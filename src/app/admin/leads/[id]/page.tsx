@@ -453,7 +453,7 @@ export default function LeadDetailPage() {
               type="email"
               value={editEmail}
               onChange={(e) => handleEmailChange(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400"
               placeholder="email@beispiel.de"
             />
           </div>
@@ -465,7 +465,7 @@ export default function LeadDetailPage() {
               type="text"
               value={editSubject}
               onChange={(e) => handleSubjectChange(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder:text-gray-400"
               placeholder="Email-Betreff..."
             />
           </div>
@@ -477,7 +477,7 @@ export default function LeadDetailPage() {
               value={editBody}
               onChange={(e) => handleBodyChange(e.target.value)}
               rows={15}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm text-gray-900 placeholder:text-gray-400"
               placeholder="Email-Inhalt..."
             />
           </div>
