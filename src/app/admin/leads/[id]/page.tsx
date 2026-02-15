@@ -493,7 +493,8 @@ export default function LeadDetailPage() {
                 <span className="text-gray-500 text-sm">Betreff:</span> <span className="font-medium">{editSubject || '—'}</span>
               </div>
               <div 
-                className="prose max-w-none text-sm"
+                className="prose max-w-none text-sm text-gray-900"
+                style={{ color: '#111827' }}
                 dangerouslySetInnerHTML={{ __html: editBody.replace(/\n/g, '<br/>') || '<em class="text-gray-400">Kein Inhalt</em>' }}
               />
             </div>
