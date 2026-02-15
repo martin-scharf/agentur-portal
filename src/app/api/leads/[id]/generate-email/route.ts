@@ -39,50 +39,30 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    // TODO: Hier könnte OpenAI für personalisierte Emails genutzt werden
-    // Für jetzt: Template-basierte Email
+    // Email-Template: Kurz, freundlich, unaufdringlich. Absender: Jeanette
     console.log('📧 Generiere Email-Entwurf für:', lead.firma);
 
-    const kontaktAnrede = lead.name 
-      ? `Guten Tag ${lead.name.split(' ')[0]}` 
-      : 'Guten Tag';
+    // Anrede bestimmen
+    const nachname = lead.name ? lead.name.split(' ').pop() : '';
+    const anrede = nachname ? `Hallo Herr ${nachname}` : 'Guten Tag';
 
-    const branchenText = lead.branche 
-      ? `Als ${lead.branche} wissen Sie` 
-      : 'Sie wissen sicherlich';
+    const emailSubject = `Eine Demo-Website für ${lead.firma}`;
 
-    const websiteHinweis = lead.websiteUrl
-      ? `Ich habe mir Ihre aktuelle Website (${lead.websiteUrl}) angesehen und sehe großes Potenzial für eine moderne, mobiloptimierte Präsenz.`
-      : 'Eine professionelle Website ist heute unverzichtbar, um neue Kunden zu gewinnen und Ihr Unternehmen optimal zu präsentieren.';
+    const emailBody = `${anrede},
 
-    const emailSubject = `${lead.firma} – Ihre neue Demo-Website ist fertig 🚀`;
+wir haben uns Ihr Unternehmen angeschaut und eine kostenlose Demo-Website speziell für ${lead.firma} erstellt.
 
-    const emailBody = `${kontaktAnrede},
-
-ich bin Martin von der Web-Agentur Lokal und habe mir erlaubt, eine Demo-Website speziell für ${lead.firma} zu erstellen.
-
-${branchenText}, wie wichtig eine professionelle Online-Präsenz für den Geschäftserfolg ist. ${websiteHinweis}
-
-<strong>Ihre persönliche Demo-Website:</strong>
+<strong>Schauen Sie sich Ihre Demo an:</strong>
 <a href="${lead.demoUrl}">${lead.demoUrl}</a>
 
-Diese Demo zeigt, wie Ihr Unternehmen online erstrahlen könnte:
-• Modernes, mobilfreundliches Design
-• Schnelle Ladezeiten
-• Suchmaschinenoptimiert (SEO)
-• Einfach zu pflegen
+Die Seite zeigt, wie Ihr Betrieb online aussehen könnte – modern, mobilfreundlich und einladend für neue Kunden.
 
-<strong>Und das Beste:</strong> Wenn Ihnen gefällt, was Sie sehen, können wir diese Demo direkt als Grundlage für Ihre neue Website nutzen!
+Wenn Ihnen gefällt was Sie sehen, melden Sie sich einfach bei uns. Wir freuen uns auf Ihre Rückmeldung!
 
-Haben Sie 15 Minuten Zeit für ein kurzes Telefonat? Ich würde Ihnen gerne zeigen, wie wir ${lead.firma} online optimal positionieren können.
+Viele Grüße
+Jeanette
 
-Antworten Sie einfach auf diese Email oder rufen Sie mich an unter 0176 / XXX XXX.
-
-Mit freundlichen Grüßen
-Martin
-Web-Agentur Lokal
-
-P.S. Die Demo bleibt noch 14 Tage online – schauen Sie sie sich in Ruhe an!`;
+Heimatweb – Websites für Handwerker`;
 
     // Lead aktualisieren
     const updatedLead = await prisma.lead.update({
