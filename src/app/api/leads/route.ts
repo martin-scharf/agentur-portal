@@ -28,10 +28,36 @@ export async function GET() {
         demoUrl: true,
         createdAt: true,
         updatedAt: true,
+        messages: {
+          where: {
+            direction: 'inbound',
+            status: {
+              in: ['received', 'sent'] // 'sent' für inbound = empfangen
+            }
+          },
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        },
       },
     });
 
-    return NextResponse.json(leads);
+    // Sortierung: Leads mit unbearbeiteten inbound Messages GANZ OBEN
+    const leadsWithStatus = leads.map(lead => ({
+      ...lead,
+      hasUnreadReply: lead.messages && lead.messages.length > 0,
+      lastReplyAt: lead.messages?.[0]?.createdAt || null,
+    }));
+
+    // Sortiere: Zuerst Leads mit unbearbeiteten Antworten, dann Rest nach updatedAt
+    const sortedLeads = leadsWithStatus.sort((a, b) => {
+      if (a.hasUnreadReply && !b.hasUnreadReply) return -1;
+      if (!a.hasUnreadReply && b.hasUnreadReply) return 1;
+      
+      // Beide haben oder haben keine unread replies -> nach updatedAt sortieren
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+    });
+
+    return NextResponse.json(sortedLeads);
   } catch (error) {
     console.error('Leads fetch error:', error);
     return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });

@@ -17,6 +17,8 @@ type Lead = {
   status: string;
   demoUrl?: string;
   createdAt: string;
+  hasUnreadReply?: boolean;
+  lastReplyAt?: string | null;
 };
 
 const statusLabels: Record<string, string> = {
@@ -101,9 +103,23 @@ export default function LeadsPage() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {leads.map((lead) => (
-              <tr key={lead.id} className="hover:bg-gray-50">
+              <tr 
+                key={lead.id} 
+                className={`hover:bg-gray-50 ${
+                  lead.hasUnreadReply 
+                    ? 'bg-orange-50 border-l-4 border-orange-500' 
+                    : ''
+                }`}
+              >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {lead.leadId}
+                  <div className="flex items-center gap-2">
+                    {lead.leadId}
+                    {lead.hasUnreadReply && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-orange-500 text-white animate-pulse">
+                        Neue Antwort!
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-900">
                   <div className="font-medium">{lead.firma}</div>
