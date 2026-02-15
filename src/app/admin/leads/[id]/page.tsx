@@ -393,8 +393,8 @@ export default function LeadDetailPage() {
         )}
       </div>
 
-      {/* Demo-Website (wenn vorhanden) */}
-      {lead.demoUrl && (
+      {/* Demo-Website (nur anzeigen wenn Status mindestens DEMO_READY) */}
+      {lead.status !== 'NEW' && lead.demoUrl && (
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <h2 className="text-xl font-bold mb-4">✨ Demo-Website</h2>
           <a
@@ -408,6 +408,19 @@ export default function LeadDetailPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
+        </div>
+      )}
+      
+      {/* Status-Anzeige während Demo erstellt wird */}
+      {lead.status === 'NEW' && creatingDemo && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-bold mb-2 text-blue-900 flex items-center gap-2">
+            <span className="animate-spin">⏳</span> Website wird erstellt...
+          </h2>
+          <p className="text-blue-700">
+            Der BUILDER-Agent erstellt gerade die Demo-Website für {lead.firma}. 
+            Dies kann einige Minuten dauern. Die URL wird angezeigt sobald die Seite live ist.
+          </p>
         </div>
       )}
 
