@@ -175,7 +175,7 @@ export default function EmailHistory({ leadId }: EmailHistoryProps) {
                       type="text"
                       value={editSubject}
                       onChange={(e) => setEditSubject(e.target.value)}
-                      className="w-full p-2 border border-gray-300 rounded text-sm"
+                      className="w-full p-2 border border-gray-300 rounded text-sm text-gray-900"
                       placeholder="Betreff..."
                     />
                   </div>
@@ -195,7 +195,7 @@ export default function EmailHistory({ leadId }: EmailHistoryProps) {
                       value={editBody}
                       onChange={(e) => setEditBody(e.target.value)}
                       rows={8}
-                      className="w-full p-2 border border-gray-300 rounded font-mono text-sm"
+                      className="w-full p-2 border border-gray-300 rounded font-mono text-sm text-gray-900"
                       placeholder="Nachricht..."
                     />
                   </div>
