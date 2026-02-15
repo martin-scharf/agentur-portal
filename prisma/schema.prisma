@@ -92,30 +92,46 @@ enum LeadStatus {
 }
 
 model Lead {
-  id            String     @id @default(cuid())
-  leadId        String     @unique // L-2026-001
+  id            String        @id @default(cuid())
+  leadId        String        @unique // L-2026-001
   firma         String
-  name          String?    // Kontaktperson
+  name          String?       // Kontaktperson
   branche       String?
   adresse       String?
   telefon       String?
   email         String?
   website       String?
-  websiteUrl    String?    // Bestehende Website des Kunden
+  websiteUrl    String?       // Bestehende Website des Kunden
   websiteScore  Int?
   googleRating  String?
-  description   String?    // Firmenbeschreibung / Zusammenfassung
-  leadSource    String?    // Quelle des Leads (Google Maps, Facebook, Instagram, Gelbe Seiten, Empfehlung)
-  leadSourceUrl String?    // URL zur Quelle (Facebook-Profil, Instagram, Google Maps Eintrag)
-  status        LeadStatus @default(NEW)
+  description   String?       // Firmenbeschreibung / Zusammenfassung
+  leadSource    String?       // Quelle des Leads (Google Maps, Facebook, Instagram, Gelbe Seiten, Empfehlung)
+  leadSourceUrl String?       // URL zur Quelle (Facebook-Profil, Instagram, Google Maps Eintrag)
+  status        LeadStatus    @default(NEW)
   demoUrl       String?
   emailSubject  String?
-  emailBody     String?    @db.Text
-  priority      String     @default("normal")
+  emailBody     String?       @db.Text
+  priority      String        @default("normal")
   notes         String?
-  sentAt        DateTime?  // Versandzeitpunkt der Email
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  sentAt        DateTime?     // Versandzeitpunkt der Email
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  messages      LeadMessage[] // Email-Verlauf
+}
+
+// Email-Verlauf (Chat-History)
+model LeadMessage {
+  id        String    @id @default(cuid())
+  leadId    String
+  lead      Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  direction String    // "inbound" oder "outbound"
+  from      String    // Absender Email
+  to        String    // Empfänger Email
+  subject   String?
+  body      String    @db.Text
+  status    String    @default("draft") // "draft", "approved", "sent"
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
 }
 
 // Email Log

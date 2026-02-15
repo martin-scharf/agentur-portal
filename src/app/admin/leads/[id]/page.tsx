@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import EmailHistory from '@/components/EmailHistory';
 
 type Lead = {
   id: string;
@@ -445,6 +446,11 @@ export default function LeadDetailPage() {
             <p className="mt-1 text-gray-900">{lead.adresse || '—'}</p>
           </div>
         </div>
+      </div>
+
+      {/* Email-Verlauf (Chat-History) */}
+      <div className="mb-6">
+        <EmailHistory leadId={lead.id} />
       </div>
 
       {/* STEP 3: Email-Bearbeitung (bei EMAIL_DRAFT oder später) */}
