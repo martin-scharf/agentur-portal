@@ -46,23 +46,22 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     const nachname = lead.name ? lead.name.split(' ').pop() : '';
     const anrede = nachname ? `Sehr geehrter Herr ${nachname}` : 'Sehr geehrte Damen und Herren';
 
-    const emailSubject = `Eine Demo-Website für ${lead.firma}`;
+    const emailSubject = `Ihr professioneller Internetauftritt – Demo für ${lead.firma}`;
 
     const emailBody = `${anrede},
 
-wir haben uns Ihr Unternehmen angeschaut und eine kostenlose Demo-Website speziell für ${lead.firma} erstellt.
+bei unserer Recherche ist uns aufgefallen, dass ${lead.firma} derzeit über keinen eigenen Internetauftritt verfügt. Da ein professioneller Webauftritt gerade im Handwerk ein wichtiger Faktor für die Kunden- und Mitarbeitergewinnung ist, haben wir uns erlaubt, eine individuelle Demo-Website speziell für Ihren Betrieb zu erstellen – selbstverständlich kostenlos und unverbindlich.
 
-<strong>Schauen Sie sich Ihre Demo an:</strong>
-<a href="${lead.demoUrl}">${lead.demoUrl}</a>
+Überzeugen Sie sich selbst:
+${lead.demoUrl}
 
-Die Seite zeigt, wie Ihr Betrieb online aussehen könnte – modern, mobilfreundlich und einladend für neue Kunden.
+Die Seite vermittelt einen Eindruck davon, wie Ihr Betrieb online professionell auftreten könnte – modern, mobiloptimiert und ansprechend für potenzielle Kunden und Mitarbeiter.
 
-Wenn Ihnen gefällt was Sie sehen, melden Sie sich einfach bei uns. Wir freuen uns auf Ihre Rückmeldung!
+Wenn Ihnen der Entwurf zusagt, freuen wir uns über Ihre Rückmeldung. Gerne besprechen wir die nächsten Schritte mit Ihnen.
 
-Viele Grüße
+Mit freundlichen Grüßen
 Jeanette
-
-partpeople – Websites für Handwerker`;
+partpeople – Websites und individuelle Softwarelösungen`;
 
     // Lead aktualisieren
     const updatedLead = await prisma.lead.update({
