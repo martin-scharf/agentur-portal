@@ -44,7 +44,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
     // Anrede bestimmen
     const nachname = lead.name ? lead.name.split(' ').pop() : '';
-    const anrede = nachname ? `Hallo Herr ${nachname}` : 'Guten Tag';
+    const anrede = nachname ? `Sehr geehrter Herr ${nachname}` : 'Sehr geehrte Damen und Herren';
 
     const emailSubject = `Eine Demo-Website für ${lead.firma}`;
 
