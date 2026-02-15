@@ -11,6 +11,7 @@ type Lead = {
   adresse?: string;
   email?: string;
   telefon?: string;
+  description?: string;
   status: string;
   demoUrl?: string;
   createdAt: string;
@@ -83,13 +84,10 @@ export default function LeadsPage() {
                 Lead-ID
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Firma
+                Firma / Beschreibung
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Kontakt
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Adresse
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
@@ -105,17 +103,22 @@ export default function LeadsPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {lead.leadId}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {lead.firma}
+                <td className="px-6 py-4 text-sm text-gray-900">
+                  <div className="font-medium">{lead.firma}</div>
+                  {lead.description && (
+                    <div className="text-xs text-gray-500 mt-1 line-clamp-2">
+                      {lead.description}
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div>{lead.name || '—'}</div>
                   {lead.email && (
                     <div className="text-xs text-gray-400">{lead.email}</div>
                   )}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {lead.adresse || '—'}
+                  {lead.adresse && (
+                    <div className="text-xs text-gray-400 mt-1">{lead.adresse}</div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span

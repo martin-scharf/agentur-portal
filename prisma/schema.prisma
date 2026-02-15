@@ -101,8 +101,10 @@ model Lead {
   telefon       String?
   email         String?
   website       String?
+  websiteUrl    String?    // Bestehende Website des Kunden
   websiteScore  Int?
   googleRating  String?
+  description   String?    // Firmenbeschreibung / Zusammenfassung
   status        LeadStatus @default(NEW)
   demoUrl       String?
   emailSubject  String?

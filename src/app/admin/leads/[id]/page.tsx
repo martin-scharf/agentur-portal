@@ -11,6 +11,8 @@ type Lead = {
   adresse?: string;
   email?: string;
   telefon?: string;
+  websiteUrl?: string;
+  description?: string;
   status: string;
   demoUrl?: string;
   emailSubject?: string;
@@ -116,6 +118,47 @@ export default function LeadDetailPage() {
             {statusLabels[lead.status] || lead.status}
           </span>
         </div>
+      </div>
+
+      {/* Firmenbeschreibung */}
+      {lead.description && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-bold mb-3 text-blue-900">Über das Unternehmen</h2>
+          <p className="text-gray-800 leading-relaxed">{lead.description}</p>
+        </div>
+      )}
+
+      {/* Bestehende Website */}
+      <div className="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 className="text-xl font-bold mb-4">Bestehende Website</h2>
+        {lead.websiteUrl ? (
+          <div>
+            <a
+              href={lead.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            >
+              🌐 {lead.websiteUrl}
+              <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+              <iframe
+                src={lead.websiteUrl}
+                className="w-full h-64 rounded border border-gray-300"
+                title="Website Preview"
+                sandbox="allow-same-origin"
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-yellow-800 font-medium">🎯 Keine Website vorhanden</p>
+            <p className="text-yellow-700 text-sm mt-1">Das ist unser Verkaufsargument! Wir helfen beim Aufbau einer professionellen Web-Präsenz.</p>
+          </div>
+        )}
       </div>
 
       {/* Kontaktdaten */}

@@ -20,6 +20,8 @@ export async function GET() {
         adresse: true,
         email: true,
         telefon: true,
+        websiteUrl: true,
+        description: true,
         status: true,
         demoUrl: true,
         createdAt: true,
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { firma, name, adresse, email, telefon, demoUrl, emailSubject, emailBody } = body;
+    const { firma, name, adresse, email, telefon, websiteUrl, description, demoUrl, emailSubject, emailBody } = body;
 
     if (!firma) {
       return NextResponse.json({ error: 'Firma is required' }, { status: 400 });
@@ -61,6 +63,8 @@ export async function POST(request: NextRequest) {
         adresse,
         email,
         telefon,
+        websiteUrl,
+        description,
         demoUrl,
         emailSubject,
         emailBody,
