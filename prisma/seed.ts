@@ -1,5 +1,10 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+
+console.log('DATABASE_URL:', process.env.DATABASE_URL?.substring(0, 50) + '...')
 
 const prisma = new PrismaClient()
 
