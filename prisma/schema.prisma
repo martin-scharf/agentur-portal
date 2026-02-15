@@ -83,23 +83,34 @@ model Activity {
 }
 
 // Lead Pipeline
+enum LeadStatus {
+  NEW
+  DEMO_READY
+  EMAIL_DRAFT
+  APPROVED
+  SENT
+}
+
 model Lead {
-  id            String   @id @default(cuid())
-  leadId        String   @unique // L-2026-001
+  id            String     @id @default(cuid())
+  leadId        String     @unique // L-2026-001
   firma         String
-  branche       String
+  name          String?    // Kontaktperson
+  branche       String?
   adresse       String?
   telefon       String?
   email         String?
   website       String?
   websiteScore  Int?
   googleRating  String?
-  status        String   @default("neu") // neu, demo_erstellt, kontaktiert, etc.
+  status        LeadStatus @default(NEW)
   demoUrl       String?
-  priority      String   @default("normal")
+  emailSubject  String?
+  emailBody     String?    @db.Text
+  priority      String     @default("normal")
   notes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 }
 
 // Email Log
