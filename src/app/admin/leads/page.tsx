@@ -12,6 +12,8 @@ type Lead = {
   email?: string;
   telefon?: string;
   description?: string;
+  leadSource?: string;
+  leadSourceUrl?: string;
   status: string;
   demoUrl?: string;
   createdAt: string;
@@ -105,6 +107,26 @@ export default function LeadsPage() {
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-900">
                   <div className="font-medium">{lead.firma}</div>
+                  {lead.leadSource && (
+                    <div className="flex items-center gap-1 mt-1">
+                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded">
+                        📍 {lead.leadSource}
+                      </span>
+                      {lead.leadSourceUrl && (
+                        <a
+                          href={lead.leadSourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:text-blue-700"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  )}
                   {lead.description && (
                     <div className="text-xs text-gray-500 mt-1 line-clamp-2">
                       {lead.description}

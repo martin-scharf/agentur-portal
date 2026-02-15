@@ -14,6 +14,8 @@ type Lead = {
   telefon?: string;
   websiteUrl?: string;
   description?: string;
+  leadSource?: string;
+  leadSourceUrl?: string;
   status: string;
   demoUrl?: string;
   emailSubject?: string;
@@ -310,6 +312,33 @@ export default function LeadDetailPage() {
           {lead.branche && (
             <p className="mt-2 text-blue-700 font-medium">Branche: {lead.branche}</p>
           )}
+        </div>
+      )}
+
+      {/* Lead-Quelle */}
+      {lead.leadSource && (
+        <div className="bg-gradient-to-r from-gray-50 to-slate-50 border border-gray-300 rounded-lg p-6 mb-6">
+          <h2 className="text-lg font-semibold mb-3 text-gray-800 flex items-center gap-2">
+            📍 Lead-Quelle
+          </h2>
+          <div className="flex items-center gap-3">
+            <span className="px-3 py-1 bg-white border border-gray-300 rounded-full text-gray-800 font-medium text-sm">
+              {lead.leadSource}
+            </span>
+            {lead.leadSourceUrl && (
+              <a
+                href={lead.leadSourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline font-medium"
+              >
+                Zur Quelle
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            )}
+          </div>
         </div>
       )}
 
