@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agentur Command Center
 
-## Getting Started
+Ein KI-Agenten Management Portal für die Verwaltung von automatisierten Vertriebsprozessen.
 
-First, run the development server:
+## Features
+
+- 📊 **Dashboard** - Übersicht über alle Agenten, Tasks und Pipeline
+- 🤖 **Agenten-Verwaltung** - Status und Konfiguration von KI-Agenten
+- 🔑 **API-Key Management** - Sichere Speicherung mit AES-256-GCM Verschlüsselung
+- 🎯 **Lead-Pipeline** - Verfolgung von Leads durch den Vertriebsprozess
+- 📋 **Task-Management** - Aufgabenverwaltung für Agenten
+- 📝 **Activity-Feed** - Live-Protokoll aller Aktivitäten
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Database:** PostgreSQL (Neon)
+- **ORM:** Prisma 7
+- **Auth:** NextAuth.js v5
+- **Styling:** Tailwind CSS
+- **Encryption:** AES-256-GCM
+
+## Setup
+
+### 1. Dependencies installieren
+
+```bash
+npm install
+```
+
+### 2. Environment Variables
+
+Erstelle eine `.env` Datei:
+
+```env
+DATABASE_URL="postgresql://user:password@host/database?sslmode=require"
+NEXTAUTH_SECRET="dein-geheimer-schluessel"
+NEXTAUTH_URL="http://localhost:3000"
+ENCRYPTION_KEY="64-zeichen-hex-string"
+```
+
+**Encryption Key generieren:**
+```bash
+openssl rand -hex 32
+```
+
+### 3. Datenbank initialisieren
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+### 4. Development Server starten
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Default Login
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Email:** admin@portal.local
+- **Passwort:** admin123!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment (Vercel)
 
-## Learn More
+### Via Vercel CLI
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+vercel
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Environment Variables auf Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Setze folgende Environment Variables im Vercel Dashboard:
 
-## Deploy on Vercel
+- `DATABASE_URL` - Neon PostgreSQL Connection String
+- `NEXTAUTH_SECRET` - Sicherer Secret Key
+- `NEXTAUTH_URL` - Production URL (z.B. https://agentur-portal.vercel.app)
+- `ENCRYPTION_KEY` - 64-Zeichen Hex String für API-Key Verschlüsselung
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Nach dem Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Führe das Seed-Script aus, um den Admin-User zu erstellen:
+
+```bash
+npm run db:seed
+```
+
+## API Endpoints
+
+| Endpoint | Methode | Beschreibung |
+|----------|---------|--------------|
+| `/api/admin/api-keys` | GET, POST, PUT, PATCH, DELETE | API-Key Management |
+| `/api/admin/agents` | GET, POST, PUT, DELETE | Agenten-Verwaltung |
+| `/api/admin/settings` | GET, PUT | Einstellungen |
+| `/api/activity` | GET, POST | Activity-Feed |
+| `/api/tasks` | GET, POST, PUT, DELETE | Task-Management |
+| `/api/pipeline` | GET, POST, PUT, DELETE | Lead-Pipeline |
+
+## Projektstruktur
+
+```
+src/
+├── app/
+│   ├── admin/
+│   │   ├── agents/
+│   │   ├── api-keys/
+│   │   └── settings/
+│   ├── api/
+│   │   ├── activity/
+│   │   ├── admin/
+│   │   ├── auth/
+│   │   ├── pipeline/
+│   │   └── tasks/
+│   ├── dashboard/
+│   └── login/
+├── components/
+│   ├── ActivityFeed.tsx
+│   ├── AgentCard.tsx
+│   ├── DashboardLayout.tsx
+│   ├── PipelineOverview.tsx
+│   ├── Sidebar.tsx
+│   └── TaskList.tsx
+└── lib/
+    ├── auth.ts
+    ├── db.ts
+    └── encryption.ts
+```
+
+## Lizenz
+
+Privat - Alle Rechte vorbehalten
