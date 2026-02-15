@@ -32,24 +32,10 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    // Status auf APPROVED setzen
+    // Status auf APPROVED setzen (Email wird vom lokalen Bot-Agent via Apple Mail versendet)
     const updatedLead = await prisma.lead.update({
       where: { id },
       data: { status: 'APPROVED' },
-    });
-
-    // TODO: Email-Versand implementieren (z.B. via Resend/SendGrid)
-    // Für jetzt simulieren wir den Versand
-    console.log('📧 Email würde gesendet an:', lead.email);
-    console.log('Subject:', lead.emailSubject);
-
-    // Nach "Versand" Status auf SENT setzen + Zeitstempel
-    await prisma.lead.update({
-      where: { id },
-      data: { 
-        status: 'SENT',
-        sentAt: new Date(),
-      },
     });
 
     // EmailLog erstellen
