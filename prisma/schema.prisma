@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Auth Models
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String
+  role          String    @default("admin")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// API Keys (verschlüsselt gespeichert)
+model ApiKey {
+  id          String   @id @default(cuid())
+  name        String   // z.B. "OpenAI", "Anthropic"
+  service     String   // openai, anthropic, brave, etc.
+  keyEncrypted String  // AES-256 verschlüsselt
+  isActive    Boolean  @default(true)
+  lastUsed    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Agent Status
+model Agent {
+  id          String   @id @default(cuid())
+  agentId     String   @unique // boss, scout, builder, etc.
+  name        String
+  model       String
+  status      String   @default("ready") // ready, active, idle, error
+  currentTask String?
+  lastActive  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tasks       Task[]
+  activities  Activity[]
+}
+
+// Tasks / Aufgaben
+model Task {
+  id          String   @id @default(cuid())
+  taskId      String   @unique // T-2026-001
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [agentId])
+  title       String
+  description String?
+  status      String   @default("pending") // pending, active, done, failed
+  priority    String   @default("normal") // low, normal, high
+  result      String?
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Activity Feed
+model Activity {
+  id          String   @id @default(cuid())
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [agentId])
+  action      String   // started_task, completed_task, error, etc.
+  description String
+  metadata    String?  // JSON string für extra Daten
+  createdAt   DateTime @default(now())
+}
+
+// Lead Pipeline
+model Lead {
+  id            String   @id @default(cuid())
+  leadId        String   @unique // L-2026-001
+  firma         String
+  branche       String
+  adresse       String?
+  telefon       String?
+  email         String?
+  website       String?
+  websiteScore  Int?
+  googleRating  String?
+  status        String   @default("neu") // neu, demo_erstellt, kontaktiert, etc.
+  demoUrl       String?
+  priority      String   @default("normal")
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Email Log
+model EmailLog {
+  id          String   @id @default(cuid())
+  leadId      String?
+  direction   String   // in, out
+  recipient   String
+  subject     String?
+  status      String   // sent, delivered, opened, replied
+  createdAt   DateTime @default(now())
+}
+
+// Settings
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
