@@ -105,12 +105,15 @@ model Lead {
   websiteScore  Int?
   googleRating  String?
   description   String?    // Firmenbeschreibung / Zusammenfassung
+  leadSource    String?    // Quelle des Leads (Google Maps, Facebook, Instagram, Gelbe Seiten, Empfehlung)
+  leadSourceUrl String?    // URL zur Quelle (Facebook-Profil, Instagram, Google Maps Eintrag)
   status        LeadStatus @default(NEW)
   demoUrl       String?
   emailSubject  String?
   emailBody     String?    @db.Text
   priority      String     @default("normal")
   notes         String?
+  sentAt        DateTime?  // Versandzeitpunkt der Email
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }

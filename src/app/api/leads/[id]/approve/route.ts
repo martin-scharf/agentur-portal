@@ -43,10 +43,13 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     console.log('📧 Email würde gesendet an:', lead.email);
     console.log('Subject:', lead.emailSubject);
 
-    // Nach "Versand" Status auf SENT setzen
+    // Nach "Versand" Status auf SENT setzen + Zeitstempel
     await prisma.lead.update({
       where: { id },
-      data: { status: 'SENT' },
+      data: { 
+        status: 'SENT',
+        sentAt: new Date(),
+      },
     });
 
     // EmailLog erstellen
