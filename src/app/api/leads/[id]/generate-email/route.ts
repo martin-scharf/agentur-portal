@@ -62,7 +62,7 @@ Wenn Ihnen gefällt was Sie sehen, melden Sie sich einfach bei uns. Wir freuen u
 Viele Grüße
 Jeanette
 
-Heimatweb – Websites für Handwerker`;
+partpeople – Websites für Handwerker`;
 
     // Lead aktualisieren
     const updatedLead = await prisma.lead.update({
